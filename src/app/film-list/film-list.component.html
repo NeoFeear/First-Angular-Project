@@ -1,0 +1,15 @@
+<div class="text-center mt-5 mb-5">
+  <h1>{{ title }}</h1>
+  <button class="btn btn-outline-success mx-2" (click)="onAirAll()">En Salle</button>
+  <button class="btn btn-outline-danger mx-2" (click)="noOnAirAll()">Pas En Salle</button>
+</div>
+
+<ul class="list-group mb-5">
+  <app-film *ngFor="let film of films; let i = index" 
+            [index]="i"
+            [id]="film.id"
+            [filmName]="film.title" 
+            [filmOnAir]="film.onAir" 
+            [filmAffiche]="film.filmAffiche">
+  </app-film>
+</ul>

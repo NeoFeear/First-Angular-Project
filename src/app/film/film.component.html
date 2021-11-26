@@ -1,0 +1,39 @@
+<li [ngClass]="{ 'list-group-item': true,
+                 'list-group-item-success': filmOnAir == true,
+                 'list-group-item-danger': filmOnAir == false }">
+    <div class="row">
+        <!-- IMAGE FILM -->
+        <div class="col-2 d-flex justify-content-center">
+            <img class="affiche img-fluid img-responsive" [src]="filmAffiche">
+        </div>
+
+        <!-- ON AIR -->
+        <div class="col-1 d-flex justify-content-center align-items-center">
+            <div class="onAir" *ngIf="filmOnAir == true">
+                <img src="https://cdn-icons-png.flaticon.com/512/21/21194.png" alt="En salle">
+            </div>
+
+            <div class="onAir" *ngIf="filmOnAir == false">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8c/Blu_ray_logo.png/800px-Blu_ray_logo.png" alt="BluRay">
+            </div>
+        </div>
+
+        <!-- TITRE + BTN -->
+        <div class="col d-flex align-items-center">
+            <h3 [ngStyle]="{color: changeColor()}">
+                <u>Film n°{{ id }}:</u> {{ filmName }}<br>
+
+                <div class="mt-4">
+                    <button class="btn btn-outline-success" (click)="onWatchFilm()">Regarder</button>
+                    <button class="btn btn-outline-info mx-2" (click)="onSwitch()">Switch</button>
+                </div>
+            </h3>
+        </div>
+
+        <!-- MODIF + DELETE -->
+        <div class="col-3 d-flex justify-content-center align-items-center">
+            <a [routerLink]="['/modif', id]" class="btn btn-warning">Modif</a>
+            <button class="btn btn-danger mx-2">Delete</button>
+        </div>
+    </div>
+</li>
