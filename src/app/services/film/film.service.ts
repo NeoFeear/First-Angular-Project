@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
 import { Subject, Observable } from 'rxjs';
-import { Films } from 'src/app/models/films.model';
+import { Film } from 'src/app/models/film.model';
 import { map } from 'rxjs/operators';
 
 @Injectable({
@@ -11,7 +11,7 @@ export class FilmService {
   private films: any;
   private dbPath = '/films';
   filmSubject = new Subject<any[]>();
-  filmsRef: AngularFirestoreCollection<Films>;
+  filmsRef: AngularFirestoreCollection<Film>;
 
   constructor(
     private db: AngularFirestore
@@ -27,6 +27,47 @@ export class FilmService {
         })
       })
     );
+  }
+
+  saveNewFilm(film: Film):any {
+    return new Observable(obs => {
+      this.filmsRef.add({...film}).then(() => {
+        obs.next();
+      })
+    })
+  }
+
+  setOnAir() {
+    for (const film of this.films) {
+      film.onAir = true;
+    }
+    this.emitFilmSubject();
+  }
+
+  setNoOnAir() {
+    for (const film of this.films) {
+      film.onAir = false;
+    }
+    this.emitFilmSubject();
+  }
+
+  switchOnAir(index: number) {
+    this.films[index].onAir = !this.films[index].onAir;
+    this.emitFilmSubject();
+  }
+
+  getFilmById(id: number) {
+    let tmp;
+    for (const film of this.films) {
+      if (film.id == id) {
+        tmp = film;
+      }
+    }
+    return tmp;
+  }
+
+  emitFilmSubject() {
+    this.filmSubject.next(this.films.slice());
   }
 
   /* private films = [
@@ -61,37 +102,4 @@ export class FilmService {
       filmAffiche: 'https://fr.web.img3.acsta.net/medias/nmedia/18/35/14/33/18366630.jpg'
     }
   ]; */
-
-  setOnAir() {
-    for (const film of this.films) {
-      film.onAir = true;
-    }
-    this.emitFilmSubject();
-  }
-
-  setNoOnAir() {
-    for (const film of this.films) {
-      film.onAir = false;
-    }
-    this.emitFilmSubject();
-  }
-
-  switchOnAir(index: number) {
-    this.films[index].onAir = !this.films[index].onAir;
-    this.emitFilmSubject();
-  }
-
-  getFilmById(id: number) {
-    let tmp;
-    for (const film of this.films) {
-      if (film.id == id) {
-        tmp = film;
-      }
-    }
-    return tmp;
-  }
-
-  emitFilmSubject() {
-    this.filmSubject.next(this.films.slice());
-  }
 }

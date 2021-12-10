@@ -1,7 +1,7 @@
-import { Films } from './films.model';
+import { Film } from './film.model';
 
 describe('Films', () => {
   it('should create an instance', () => {
-    expect(new Films()).toBeTruthy();
+    expect(new Film()).toBeTruthy();
   });
 });

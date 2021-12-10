@@ -1,4 +1,4 @@
-export class Films {
+export class Film {
     id?: string;
     country: string;
     music: string;
