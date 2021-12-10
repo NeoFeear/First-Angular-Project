@@ -1,5 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Component, OnInit} from '@angular/core';
 import { FilmService } from '../services/film/film.service';
 
 @Component({
@@ -8,30 +7,14 @@ import { FilmService } from '../services/film/film.service';
   styleUrls: ['./film-list.component.scss']
 })
 export class FilmListComponent implements OnInit {
-  title = 'Liste de films';
-  films: any = [];
-  filmSubscription: Subscription | undefined;
-
+  films!:any;
   constructor(
     private Film: FilmService
-  ) { }
+  ) {}
 
-  ngOnInit() {
-    this.filmSubscription = this.Film.filmSubject.subscribe((listFilm) => {
-      this.films = listFilm;
+  ngOnInit(): void {
+    this.Film.getAllFilms().subscribe((data: any) => {
+      this.films = data;
     });
-    this.Film.emitFilmSubject();
   }
-
-  onAirAll() {
-    this.Film.setOnAir();
-  }
-
-  noOnAirAll() {
-    this.Film.setNoOnAir();
-  }
-
-  ngOnDestroy() {
-    this.filmSubscription?.unsubscribe();
-  }
-} 
+}

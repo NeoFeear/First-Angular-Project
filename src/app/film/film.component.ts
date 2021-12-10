@@ -7,32 +7,44 @@ import { FilmService } from '../services/film/film.service';
   styleUrls: ['./film.component.scss']
 })
 export class FilmComponent implements OnInit {
+  @Input() filmName?: string;
+  @Input() filmOnAir?: boolean;
+  @Input() filmAffiche?: string;
+  @Input() filmCountry?: string;
+  @Input() filmMusic?: string;
+  @Input() filmProductor?: string;
+  @Input() filmRealisator?: string;
+  @Input() filmReleaseDate?: string;
+  @Input() filmScenario?: string;
+  @Input() filmSynopsis?: string;
+  @Input() filmTime?: string;
+  @Input() id?: string ;
 
-  @Input() index!: number;
-  @Input() id!: number;
-  @Input() filmName!: string;
-  @Input() filmOnAir!: boolean;
-  @Input() filmAffiche!: string;
-
-  constructor(private Film: FilmService) { }
+  constructor(
+    private Film: FilmService
+  ) { }
 
   ngOnInit(): void {
   }
 
-  getOnAir(){
+  getOnAir() {
     return this.filmOnAir;
   }
 
   onWatchFilm() {
-    console.log('Lecture du film démarré !');
+    console.log('Je regarde le Film');
   }
 
   changeColor() {
-    return this.filmOnAir ? 'green' : 'red';
+    return this.filmOnAir ? 'purple' : 'red';
   }
 
   onSwitch() {
-    this.Film.switchOnAir(this.index);
+    // this.Film.switchOnAir(this.index);
+  }
+
+  suppr():void {
+    //this.Film.delete(this.id);
   }
 
 }

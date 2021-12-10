@@ -1,39 +1,53 @@
-<li [ngClass]="{ 'list-group-item': true,
-                 'list-group-item-success': filmOnAir == true,
-                 'list-group-item-danger': filmOnAir == false }">
-    <div class="row">
-        <!-- IMAGE FILM -->
-        <div class="col-2 d-flex justify-content-center">
+<li [ngClass]=" { 'list-group-item': true,
+    'list-group-item-info': filmOnAir == true,
+    'list-group-item-warning': filmOnAir == false }">
+    <div class="row d-flex justify-content-center">
+        <div class="col-2">
             <img class="affiche img-fluid img-responsive" [src]="filmAffiche">
         </div>
-
-        <!-- ON AIR -->
-        <div class="col-1 d-flex justify-content-center align-items-center">
-            <div class="onAir" *ngIf="filmOnAir == true">
-                <img src="https://cdn-icons-png.flaticon.com/512/21/21194.png" alt="En salle">
-            </div>
-
+        
+        <div class="col-8">
             <div class="onAir" *ngIf="filmOnAir == false">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8c/Blu_ray_logo.png/800px-Blu_ray_logo.png" alt="BluRay">
+                <img
+                src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/14/Blu-ray_Disc.svg/1200px-Blu-ray_Disc.svg.png">
             </div>
-        </div>
-
-        <!-- TITRE + BTN -->
-        <div class="col d-flex align-items-center">
-            <h3 [ngStyle]="{color: changeColor()}">
-                <u>Film n°{{ id }}:</u> {{ filmName }}<br>
-
-                <div class="mt-4">
-                    <button class="btn btn-outline-success" (click)="onWatchFilm()">Regarder</button>
-                    <button class="btn btn-outline-info mx-2" (click)="onSwitch()">Switch</button>
+            <div class="onAir" *ngIf="filmOnAir == true">
+                <img src="https://fr.web.img3.acsta.net/r_654_368/newsv7/21/04/29/14/22/0010719.jpg">
+            </div>
+            <div class="row">
+                <div class="col-12 col-sm-6">
+                <h3 [ngStyle]="{color: changeColor()}">Film : {{ filmName }}</h3>
                 </div>
-            </h3>
+                <div class="col-12 col-sm-6 text-dark">
+                <u>Date:</u> {{ filmReleaseDate }} // <u>Durée :</u> {{ filmTime }}min // <u>Pays:</u> {{filmCountry}}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12 col-sm-6">
+                <u>Producteur:</u> {{filmProductor}} <br>
+                <u>Realisateur:</u> {{filmRealisator}}
+                </div>
+                <div class="col-12 col-sm-6">
+                <u>Scénariste:</u> {{filmScenario}} <br>
+                <u>Musique:</u> {{filmMusic}}
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-12">
+                <u>Résumé:</u><br>
+                <div class="text-justify">
+                    {{filmSynopsis}}
+                </div>
+                </div>
+            </div>
+            <button class="btn btn-outline-success" (click)="onWatchFilm()">Regarder</button> <br>
+            <button class="btn btn-outline-info" (click)="onSwitch()">Switch</button>
         </div>
-
-        <!-- MODIF + DELETE -->
-        <div class="col-3 d-flex justify-content-center align-items-center">
-            <a [routerLink]="['/modif', id]" class="btn btn-warning">Modif</a>
-            <button class="btn btn-danger mx-2">Delete</button>
+        
+        <div class="col-2 d-flex justify-content-evenly align-items-center">
+            <a [routerLink]="['/modif', id]" class="btn btn-warning">M</a>
+            <button class="btn btn-danger" (click)="suppr()">X</button>
         </div>
     </div>
 </li>

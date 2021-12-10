@@ -1,15 +1,35 @@
 import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
+import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
+import { Subject, Observable } from 'rxjs';
+import { Films } from 'src/app/models/films.model';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class FilmService {
+  private films: any;
+  private dbPath = '/films';
   filmSubject = new Subject<any[]>();
+  filmsRef: AngularFirestoreCollection<Films>;
 
-  constructor() { }
+  constructor(
+    private db: AngularFirestore
+  ) {
+    this.filmsRef = db.collection(this.dbPath);
+  }
 
-  private films = [
+  getAllFilms(): any {
+    return this.filmsRef.snapshotChanges().pipe(
+      map((changes:any) => {
+        return changes.map((doc:any) => {
+          return ({id: doc.payload.doc.id, ...doc.payload.doc.data()})
+        })
+      })
+    );
+  }
+
+  /* private films = [
     {
       id: 1,
       title: 'American History X',
@@ -40,7 +60,7 @@ export class FilmService {
       onAir: true,
       filmAffiche: 'https://fr.web.img3.acsta.net/medias/nmedia/18/35/14/33/18366630.jpg'
     }
-  ];
+  ]; */
 
   setOnAir() {
     for (const film of this.films) {

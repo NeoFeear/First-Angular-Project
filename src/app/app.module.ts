@@ -12,6 +12,10 @@ import { FilmNewComponent } from './film-new/film-new.component';
 import { HomeComponent } from './home/home.component';
 import { FilmListComponent } from './film-list/film-list.component';
 
+import { AngularFireModule } from '@angular/fire';
+import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { environment } from 'src/environments/environment';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -24,7 +28,9 @@ import { FilmListComponent } from './film-list/film-list.component';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    FormsModule
+    FormsModule,
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFirestoreModule,
   ],
   providers: [
     FilmService
